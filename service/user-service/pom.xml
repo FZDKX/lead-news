@@ -18,6 +18,18 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
+        <!--common-->
+        <dependency>
+            <groupId>com.fzdkx</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!--utils-->
+        <dependency>
+            <groupId>com.fzdkx</groupId>
+            <artifactId>utils</artifactId>
+            <version>1.0</version>
+        </dependency>
         <!--web-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
