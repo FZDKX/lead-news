@@ -16,6 +16,7 @@
         <module>gateway</module>
         <module>service</module>
         <module>test</module>
+        <module>service/user-service</module>
     </modules>
 
     <!--继承SpringBoot-->
