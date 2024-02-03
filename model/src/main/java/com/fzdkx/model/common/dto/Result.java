@@ -21,8 +21,8 @@ public class Result<T> implements Serializable {
      * @param code         状态码
      * @param errorMessage 提示信息
      */
-    public static Result<Object> error(int code, String errorMessage) {
-        Result<Object> result = new Result<>();
+    public static Result<String> error(int code, String errorMessage) {
+        Result<String> result = new Result<>();
         result.setCode(code);
         result.setErrorMessage(errorMessage);
         return result;
@@ -31,7 +31,7 @@ public class Result<T> implements Serializable {
     /**
      * @param appHttpCodeEnum 已规定的枚举状态信息
      */
-    public static Result<Object> error(AppHttpCodeEnum appHttpCodeEnum) {
+    public static Result<String> error(AppHttpCodeEnum appHttpCodeEnum) {
         return error(appHttpCodeEnum.getCode(), appHttpCodeEnum.getMessage());
     }
 
@@ -39,7 +39,7 @@ public class Result<T> implements Serializable {
      * 使用已有状态码，自定义异常信息
      * @param appHttpCodeEnum 已规定的枚举状态信息
      */
-    public static Result<Object> error(AppHttpCodeEnum appHttpCodeEnum, String errorMessage) {
+    public static Result<String> error(AppHttpCodeEnum appHttpCodeEnum, String errorMessage) {
         return error(appHttpCodeEnum.getCode(), errorMessage);
     }
 

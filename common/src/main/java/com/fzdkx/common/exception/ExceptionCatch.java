@@ -20,7 +20,7 @@ public class ExceptionCatch {
      */
     @ExceptionHandler(CustomException.class)
     @ResponseBody
-    public Result<Object> exception(CustomException e) {
+    public Result<String> exception(CustomException e) {
         log.error("捕获到异常：{}", e.getMessage());
         return Result.error(e.getAppHttpCodeEnum());
     }
@@ -30,7 +30,7 @@ public class ExceptionCatch {
      */
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public Result<Object> exception(Exception e){
+    public Result<String> exception(Exception e){
         // 打印异常堆栈信息
         e.printStackTrace();
         log.error("捕获到系统异常：{}",e.getMessage());

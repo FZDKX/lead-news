@@ -11,6 +11,8 @@ public enum AppHttpCodeEnum {
     // 登录操作
     NEED_LOGIN(1, "需要登录后操作"),
     LOGIN_PASSWORD_ERROR(2, "密码错误"),
+    LOGIN_USER_EXIST(3, "用户不存在"),
+    LOGIN_EMPTY(4,"手机号或密码为空"),
     // token判断
     TOKEN_INVALID(50, "无效的TOKEN"),
     TOKEN_EXPIRE(51, "TOKEN已过期"),
