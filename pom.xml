@@ -17,6 +17,7 @@
         <module>service</module>
         <module>test</module>
         <module>service/user-service</module>
+        <module>service/article-service</module>
     </modules>
 
     <!--继承SpringBoot-->

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fzdkx.article.mapper.ArticleMapper">
+
+    <select id="loadArticleList" resultType="com.fzdkx.model.article.bean.Article">
+        select * from ap_article aa
+        left join ap_article_config aac on aa.id = aac.article_id
+        <where>
+            aac.is_delete != 1
+            and aac.is_down != 1
+            <if test="loadType != null and loadType == 1">
+                and aa.publish_time &lt;= #{articleHomeDto.minTime}
+            </if>
+            <if test="loadType != null and loadType == 0">
+                and aa.publish_time &gt;= #{articleHomeDto.maxTime}
+            </if>
+            <if test="articleHomeDto.tag != 'all'">
+                and aa.channel_id = #{articleHomeDto.tag}
+            </if>
+        </where>
+        order by aa.publish_time desc
+        limit #{articleHomeDto.size}
+    </select>
+</mapper>
