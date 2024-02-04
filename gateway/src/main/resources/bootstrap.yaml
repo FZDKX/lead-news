@@ -1,8 +1,8 @@
 server:
-  port: 8091
+  port: 10086
 spring:
   application:
-    name: user-service # 服务名称
+    name: gateway
   cloud:
     nacos:
       # nacos用户名
@@ -14,4 +14,3 @@ spring:
       # nacos配置中心相关
       config:
         file-extension: yaml
-    

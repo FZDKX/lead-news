@@ -1,6 +1,7 @@
 package com.fzdkx.model.common.dto;
 
 import com.fzdkx.model.common.enums.AppHttpCodeEnum;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,10 +12,14 @@ import java.io.Serializable;
  * 统一响应结果
  */
 @Data
+@Schema
 public class Result<T> implements Serializable {
     private String host;
+    @Schema(name = "响应状态码")
     private Integer code;
+    @Schema(name = "响应消息")
     private String errorMessage;
+    @Schema(name = "响应数据")
     private T data;
 
     /**

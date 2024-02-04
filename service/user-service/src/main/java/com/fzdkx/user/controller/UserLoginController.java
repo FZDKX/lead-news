@@ -3,6 +3,8 @@ package com.fzdkx.user.controller;
 import com.fzdkx.model.common.dto.Result;
 import com.fzdkx.model.user.dto.UserLoginDto;
 import com.fzdkx.user.service.UserLoginService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,12 +14,14 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/v1/login")
+@Tag(name = "用户登录控制类")
 public class UserLoginController {
 
     @Autowired
     private UserLoginService userLoginService;
 
     @PostMapping("/login_auth")
+    @Operation(summary = "用户登录方法")
     public Result<String> login(@RequestBody UserLoginDto userLoginDto) {
         return userLoginService.login(userLoginDto);
     }

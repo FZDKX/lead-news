@@ -1,6 +1,6 @@
 package com.fzdkx.utils.config;
 
-import com.fzdkx.utils.JWTUtils;
+import com.fzdkx.utils.TokenUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UtilsAutoConfiguration {
     @Bean
-    public JWTUtils jwtUtils() {
-        return new JWTUtils();
+    public TokenUtils tokenUtils() {
+        return new TokenUtils();
     }
 }
