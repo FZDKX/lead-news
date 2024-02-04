@@ -33,9 +33,9 @@ public class GatewayFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        // 获取 请求与响应
-        ServerHttpRequest request = exchange.getRequest();
+        // 获取请求与响应
         ServerHttpResponse response = exchange.getResponse();
+        ServerHttpRequest request = exchange.getRequest();
         // 判断是否是登录请求
         // 如果是登录请求，放行
         if (request.getURI().getPath().contains("/login")) {
@@ -53,7 +53,7 @@ public class GatewayFilter implements GlobalFilter {
         // 判断Token是否有效
         Boolean flag = redisTemplate.hasKey(REDIS_TOKEN_KEY + token);
         // Token无效
-        if (Boolean.FALSE.equals(flag)){
+        if (Boolean.FALSE.equals(flag)) {
             // 返回响应码 401
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             // 处理结束
@@ -68,11 +68,11 @@ public class GatewayFilter implements GlobalFilter {
     /**
      * Token续签
      */
-    public void renew(String token){
+    public void renew(String token) {
         Long expire = redisTemplate.getExpire(REDIS_TOKEN_KEY + token, TimeUnit.HOURS);
         // 如果Token过期，但Redis中依然保存，那么就续签
-        if (expire < tokenUtils.getTIME_OUT()){
-            redisTemplate.expire(REDIS_TOKEN_KEY+token,tokenUtils.getTIME_OUT() * 2 ,TimeUnit.HOURS);
+        if (expire < tokenUtils.getTIME_OUT()) {
+            redisTemplate.expire(REDIS_TOKEN_KEY + token, tokenUtils.getTIME_OUT() * 2, TimeUnit.HOURS);
         }
     }
 }
