@@ -18,6 +18,8 @@
         <module>test</module>
         <module>service/user-service</module>
         <module>service/article-service</module>
+        <module>basic</module>
+        <module>basic/fzdkx-file-starter</module>
     </modules>
 
     <!--继承SpringBoot-->

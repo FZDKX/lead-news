@@ -66,5 +66,11 @@
             <artifactId>logback-adapter</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <!--file-starter-->
+        <dependency>
+            <groupId>com.fzdkx</groupId>
+            <artifactId>fzdkx-file-starter</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>

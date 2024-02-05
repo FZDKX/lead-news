@@ -9,13 +9,7 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>test</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>jwt</module>
-        <module>freemarker</module>
-        <module>minio</module>
-    </modules>
+    <artifactId>basic</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
