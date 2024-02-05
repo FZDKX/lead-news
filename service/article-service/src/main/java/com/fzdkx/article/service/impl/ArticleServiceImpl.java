@@ -21,21 +21,27 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleMapper articleMapper;
+
     @Override
     public Result<List<Article>> loadArticleList(ArticleHomeDto articleHomeDto, Integer loadType) {
         // size参数校验
         Integer size = articleHomeDto.getSize();
-        if (size == null || size <= 0){
+        if (size == null || size <= 0) {
             size = ArticleConstants.DEFAULT_SIZE;
         }
-        articleHomeDto.setSize(Math.min(size,ArticleConstants.MAX_SIZE));
+        articleHomeDto.setSize(Math.min(size, ArticleConstants.MAX_SIZE));
         // tag校验
         String tag = articleHomeDto.getTag();
-        if (!StringUtils.hasLength(tag)){
+        if (!StringUtils.hasLength(tag)) {
             articleHomeDto.setTag(ArticleConstants.LOAD_TAG_DEFAULT);
         }
         // 时间校验
-        articleHomeDto.setTime();
+        if (articleHomeDto.getMaxBehotTime() == null) {
+            articleHomeDto.setMaxBehotTime(new Date());
+        }
+        if (articleHomeDto.getMinBehotTime() == null) {
+            articleHomeDto.setMinBehotTime(new Date());
+        }
         // 查询数据库
         List<Article> articles = articleMapper.loadArticleList(articleHomeDto, loadType);
         return Result.success(articles);

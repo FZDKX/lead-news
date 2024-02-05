@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface ArticleMapper {
     List<Article> loadArticleList(@Param("articleHomeDto") ArticleHomeDto articleHomeDto, @Param("loadType") Integer loadType);
+
+    void updateStaticUrl(@Param("article") Article article);
 }

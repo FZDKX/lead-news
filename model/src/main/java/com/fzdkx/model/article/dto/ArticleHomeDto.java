@@ -8,25 +8,11 @@ import java.util.Date;
 public class ArticleHomeDto {
 
     // 最大时间
-    private Long maxBehotTime;
+    private Date maxBehotTime;
     // 最小时间
-    private Long minBehotTime;
+    private Date minBehotTime;
     // 分页size
     private Integer size;
     // 频道ID
-    String tag;
-    private Date maxTime;
-    private Date minTime;
-    public void setTime(){
-        if (getMaxBehotTime() == null){
-            setMaxTime(new Date());
-        }else {
-            setMinTime(new Date(maxBehotTime));
-        }
-        if (getMinBehotTime() == null){
-            setMinTime(new Date());
-        }else {
-            setMinTime(new Date(minBehotTime));
-        }
-    }
+    private String tag;
 }

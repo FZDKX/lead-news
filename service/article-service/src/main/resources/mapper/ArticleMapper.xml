@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fzdkx.article.mapper.ArticleMapper">
+    <update id="updateStaticUrl">
+        update ap_article
+        set static_url = #{article.staticUrl}
+        where id = #{article.id}
+    </update>
 
     <select id="loadArticleList" resultType="com.fzdkx.model.article.bean.Article">
         select * from ap_article aa
@@ -9,12 +14,12 @@
             aac.is_delete != 1
             and aac.is_down != 1
             <if test="loadType != null and loadType == 1">
-                and aa.publish_time &lt;= #{articleHomeDto.minTime}
+                and aa.publish_time &lt;= #{articleHomeDto.minBehotTime}
             </if>
             <if test="loadType != null and loadType == 0">
-                and aa.publish_time &gt;= #{articleHomeDto.maxTime}
+                and aa.publish_time &gt;= #{articleHomeDto.maxBehotTime}
             </if>
-            <if test="articleHomeDto.tag != 'all'">
+            <if test="articleHomeDto.tag != '__all__' ">
                 and aa.channel_id = #{articleHomeDto.tag}
             </if>
         </where>
