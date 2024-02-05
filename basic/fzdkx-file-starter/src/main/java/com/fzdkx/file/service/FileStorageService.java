@@ -36,7 +36,7 @@ public interface FileStorageService {
     /**
      * 下载文件
      * @param pathUrl  文件全路径
-     * @return
+     * @return 返回文件字节数组
      */
     byte[] downLoadFile(String pathUrl);
 }

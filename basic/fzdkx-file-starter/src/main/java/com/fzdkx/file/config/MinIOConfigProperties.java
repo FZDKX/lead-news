@@ -16,7 +16,9 @@ public class MinIOConfigProperties {
     private String secretKey;
     // 桶
     private String bucket;
-    // ip + port
+    // minio服务端 ip + port
     private String endpoint;
+    // minio存储 ip + port
     private String readPath;
+    // 这两个目前是一样的
 }
