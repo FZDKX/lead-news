@@ -4,16 +4,21 @@ import com.fzdkx.common.exception.CustomException;
 import com.fzdkx.file.service.FileStorageService;
 import com.fzdkx.media.mapper.MediaMaterialMapper;
 import com.fzdkx.media.service.MediaMaterialService;
-import com.fzdkx.model.common.dto.Result;
+import com.fzdkx.model.common.vo.PageRequestResult;
+import com.fzdkx.model.common.vo.Result;
 import com.fzdkx.model.common.enums.AppHttpCodeEnum;
 import com.fzdkx.model.media.bean.MediaMaterial;
+import com.fzdkx.model.media.dto.MaterialListDto;
 import com.fzdkx.utils.MediaThreadLocalUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -28,10 +33,11 @@ public class MediaMaterialServiceImpl implements MediaMaterialService {
     private FileStorageService fileStorageService;
     @Autowired
     private MediaMaterialMapper materialMapper;
+
     @Override
     public Result<MediaMaterial> uploadPicture(MultipartFile file) {
         // 参数校验
-        if (file == null || file.getSize() == 0){
+        if (file == null || file.getSize() == 0) {
             throw new CustomException(AppHttpCodeEnum.PARAM_INVALID);
         }
         // 上传图片到minio中
@@ -44,8 +50,8 @@ public class MediaMaterialServiceImpl implements MediaMaterialService {
         String url = null;
         try {
             // 上传图片至minio 文件名称为 uuid + 上传文件后缀
-            url = fileStorageService.uploadImgFile("",fileNamePrefix + postfix,file.getInputStream());
-            log.info("图片上传成功，fileId：{}",url);
+            url = fileStorageService.uploadImgFile("", fileNamePrefix + postfix, file.getInputStream());
+            log.info("图片上传成功，fileId：{}", url);
         } catch (IOException e) {
             log.error("图片上传失败");
             throw new CustomException(AppHttpCodeEnum.FILE_UPLOAD_ERROR);
@@ -59,5 +65,22 @@ public class MediaMaterialServiceImpl implements MediaMaterialService {
         // 保存至数据库
         materialMapper.insert(mediaMaterial);
         return Result.success(mediaMaterial);
+    }
+
+    @Override
+    public PageRequestResult<List<MediaMaterial>> list(MaterialListDto dto) {
+        // 参数校验
+        dto.checkParam();
+        // 进行查询
+        // 设置分页参数
+        PageHelper.startPage(dto.getPage(), dto.getSize());
+        // 查询
+        List<MediaMaterial> list = materialMapper.getListAll(dto.getIsCollection(), MediaThreadLocalUtil.getUser().getId());
+        // 获取分页数据
+        PageInfo<MediaMaterial> pageInfo = new PageInfo<>(list);
+        PageRequestResult<List<MediaMaterial>> result
+                = new PageRequestResult<>(dto.getSize(), dto.getPage(), pageInfo.getTotal());
+        result.setData(pageInfo.getList());
+        return result;
     }
 }

@@ -1,4 +1,4 @@
-package com.fzdkx.model.common.dto;
+package com.fzdkx.model.common.vo;
 
 import com.fzdkx.model.common.enums.AppHttpCodeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -1,15 +1,19 @@
 package com.fzdkx.media.controller;
 
 import com.fzdkx.media.service.MediaMaterialService;
-import com.fzdkx.model.common.dto.Result;
+import com.fzdkx.model.common.dto.PageRequestDto;
+import com.fzdkx.model.common.vo.PageRequestResult;
+import com.fzdkx.model.common.vo.Result;
 import com.fzdkx.model.media.bean.MediaMaterial;
-import com.fzdkx.model.media.vo.MediaUploadPictureVo;
+import com.fzdkx.model.media.dto.MaterialListDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * @author 发着呆看星
@@ -24,5 +28,10 @@ public class MaterialController {
     @PostMapping("/upload_picture")
     public Result<MediaMaterial> uploadPicture(MultipartFile multipartFile){
         return materialService.uploadPicture(multipartFile);
+    }
+
+    @PostMapping("/list")
+    public PageRequestResult<List<MediaMaterial>> list(@RequestBody MaterialListDto dto){
+        return materialService.list(dto);
     }
 }

@@ -50,7 +50,7 @@ public class MediaMaterial implements Serializable {
     private Date createdTime;
 
     public void init(Long userId, String url) {
-        this.id = userId;
+        this.userId = userId;
         this.url = url;
         this.isCollection = 0;
         this.type = 0;

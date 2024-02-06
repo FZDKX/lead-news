@@ -1,6 +1,6 @@
 package com.fzdkx.user.controller;
 
-import com.fzdkx.model.common.dto.Result;
+import com.fzdkx.model.common.vo.Result;
 import com.fzdkx.model.user.dto.ApUserLoginDto;
 import com.fzdkx.user.service.UserLoginService;
 import io.swagger.v3.oas.annotations.Operation;

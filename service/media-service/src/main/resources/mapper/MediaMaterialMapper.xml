@@ -5,4 +5,9 @@
         insert into wm_material (user_id , url , type , is_collection , created_time)
         values (#{mediaMaterial.userId} , #{mediaMaterial.url} ,#{mediaMaterial.type}, #{mediaMaterial.isCollection} , #{mediaMaterial.createdTime})
     </insert>
+    <select id="getListAll" resultType="com.fzdkx.model.media.bean.MediaMaterial">
+        select * from wm_material
+        where is_collection = #{isCollection} and user_id = #{userId}
+        order by created_time desc
+    </select>
 </mapper>

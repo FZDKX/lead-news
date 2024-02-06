@@ -1,7 +1,7 @@
 package com.fzdkx.media.controller;
 
 import com.fzdkx.media.service.MediaLoginService;
-import com.fzdkx.model.common.dto.Result;
+import com.fzdkx.model.common.vo.Result;
 import com.fzdkx.model.media.dto.MediaLoginDto;
 import com.fzdkx.model.media.vo.MediaLoginVo;
 import org.springframework.beans.factory.annotation.Autowired;

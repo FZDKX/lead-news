@@ -3,7 +3,7 @@ package com.fzdkx.media.service.impl;
 import com.fzdkx.common.exception.CustomException;
 import com.fzdkx.media.mapper.MediaUserMapper;
 import com.fzdkx.media.service.MediaLoginService;
-import com.fzdkx.model.common.dto.Result;
+import com.fzdkx.model.common.vo.Result;
 import com.fzdkx.model.common.enums.AppHttpCodeEnum;
 import com.fzdkx.model.media.bean.MediaUser;
 import com.fzdkx.model.media.dto.MediaLoginDto;

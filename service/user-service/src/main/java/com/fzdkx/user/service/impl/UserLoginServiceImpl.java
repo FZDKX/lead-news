@@ -1,6 +1,6 @@
 package com.fzdkx.user.service.impl;
 
-import com.fzdkx.model.common.dto.Result;
+import com.fzdkx.model.common.vo.Result;
 import com.fzdkx.model.common.enums.AppHttpCodeEnum;
 import com.fzdkx.model.user.bean.ApUser;
 import com.fzdkx.model.user.dto.ApUserLoginDto;

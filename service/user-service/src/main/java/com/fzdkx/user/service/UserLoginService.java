@@ -1,6 +1,6 @@
 package com.fzdkx.user.service;
 
-import com.fzdkx.model.common.dto.Result;
+import com.fzdkx.model.common.vo.Result;
 import com.fzdkx.model.user.dto.ApUserLoginDto;
 
 /**

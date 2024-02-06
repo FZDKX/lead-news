@@ -2,7 +2,7 @@ package com.fzdkx.article.service;
 
 import com.fzdkx.model.article.bean.ApArticle;
 import com.fzdkx.model.article.dto.ApArticleHomeDto;
-import com.fzdkx.model.common.dto.Result;
+import com.fzdkx.model.common.vo.Result;
 
 import java.util.List;
 

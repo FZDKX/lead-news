@@ -1,6 +1,6 @@
 package com.fzdkx.media.service;
 
-import com.fzdkx.model.common.dto.Result;
+import com.fzdkx.model.common.vo.Result;
 import com.fzdkx.model.media.dto.MediaLoginDto;
 import com.fzdkx.model.media.vo.MediaLoginVo;
 

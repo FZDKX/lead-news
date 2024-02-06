@@ -4,7 +4,7 @@ import com.fzdkx.article.service.ArticleService;
 import com.fzdkx.common.constants.ArticleConstants;
 import com.fzdkx.model.article.bean.ApArticle;
 import com.fzdkx.model.article.dto.ApArticleHomeDto;
-import com.fzdkx.model.common.dto.Result;
+import com.fzdkx.model.common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
