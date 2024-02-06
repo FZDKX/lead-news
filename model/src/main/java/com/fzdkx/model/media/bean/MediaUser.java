@@ -2,6 +2,8 @@ package com.fzdkx.model.media.bean;
 
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,7 +11,8 @@ import java.util.Date;
  * @create 2024/2/6
  */
 @Data
-public class MediaUser {
+public class MediaUser implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

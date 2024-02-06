@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author 发着呆看星

@@ -26,5 +26,16 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
         </dependency>
+        <!--file-starter-->
+        <dependency>
+            <groupId>com.fzdkx</groupId>
+            <artifactId>fzdkx-file-starter</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!--freemarker-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
     </dependencies>
 </project>
