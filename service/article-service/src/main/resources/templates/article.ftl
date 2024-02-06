@@ -15,33 +15,33 @@
 
 <body>
 <div id="app">
-    <div class="article">
+    <div class="apArticle">
         <van-row>
-            <van-col span="24" class="article-title" v-html="title"></van-col>
+            <van-col span="24" class="apArticle-title" v-html="title"></van-col>
         </van-row>
 
-        <van-row type="flex" align="center" class="article-header">
+        <van-row type="flex" align="center" class="apArticle-header">
             <van-col span="3">
-                <van-image round class="article-avatar" src="https://p3.pstatp.com/thumb/1480/7186611868"></van-image>
+                <van-image round class="apArticle-avatar" src="https://p3.pstatp.com/thumb/1480/7186611868"></van-image>
             </van-col>
             <van-col span="16">
                 <div v-html="authorName"></div>
                 <div>{{ publishTime | timestampToDateTime }}</div>
             </van-col>
             <van-col span="5">
-                <van-button round :icon="relation.isfollow ? '' : 'plus'" type="info" class="article-focus"
+                <van-button round :icon="relation.isfollow ? '' : 'plus'" type="info" class="apArticle-focus"
                             :text="relation.isfollow ? '取消关注' : '关注'" :loading="followLoading" @click="handleClickArticleFollow">
                 </van-button>
             </van-col>
         </van-row>
 
-        <van-row class="article-content">
+        <van-row class="apArticle-content">
             <#if content??>
                 <#list content as item>
                     <#if item.type='text'>
-                        <van-col span="24" class="article-text">${item.value}</van-col>
+                        <van-col span="24" class="apArticle-text">${item.value}</van-col>
                     <#else>
-                        <van-col span="24" class="article-image">
+                        <van-col span="24" class="apArticle-image">
                             <van-image width="100%" src="${item.value}"></van-image>
                         </van-col>
                     </#if>
@@ -49,11 +49,11 @@
             </#if>
         </van-row>
 
-        <van-row type="flex" justify="center" class="article-action">
+        <van-row type="flex" justify="center" class="apArticle-action">
             <van-col>
-                <van-button round :icon="relation.islike ? 'good-job' : 'good-job-o'" class="article-like"
+                <van-button round :icon="relation.islike ? 'good-job' : 'good-job-o'" class="apArticle-like"
                             :loading="likeLoading" :text="relation.islike ? '取消赞' : '点赞'" @click="handleClickArticleLike"></van-button>
-                <van-button round :icon="relation.isunlike ? 'delete' : 'delete-o'" class="article-unlike"
+                <van-button round :icon="relation.isunlike ? 'delete' : 'delete-o'" class="apArticle-unlike"
                             :loading="unlikeLoading" @click="handleClickArticleUnlike">不喜欢</van-button>
             </van-col>
         </van-row>
@@ -61,9 +61,9 @@
         <!-- 文章评论列表 -->
         <van-list v-model="commentsLoading" :finished="commentsFinished" finished-text="没有更多了"
                   @load="onLoadArticleComments">
-            <van-row id="#comment-view" type="flex" class="article-comment" v-for="(item, index) in comments" :key="index">
+            <van-row id="#comment-view" type="flex" class="apArticle-comment" v-for="(item, index) in comments" :key="index">
                 <van-col span="3">
-                    <van-image round src="https://p3.pstatp.com/thumb/1480/7186611868" class="article-avatar"></van-image>
+                    <van-image round src="https://p3.pstatp.com/thumb/1480/7186611868" class="apArticle-avatar"></van-image>
                 </van-col>
                 <van-col span="21">
                     <van-row type="flex" align="center" justify="space-between">
@@ -93,7 +93,7 @@
         </van-list>
     </div>
     <!-- 文章底部栏 -->
-    <van-row type="flex" justify="space-around" align="center" class="article-bottom-bar">
+    <van-row type="flex" justify="space-around" align="center" class="apArticle-bottom-bar">
         <van-col span="13">
             <van-field v-model="commentValue" placeholder="写评论">
                 <template #button>
@@ -119,10 +119,10 @@
         <!-- 评论回复列表 -->
         <van-list v-model="commentRepliesLoading" :finished="commentRepliesFinished" finished-text="没有更多了"
                   @load="onLoadCommentReplies">
-            <van-row id="#comment-reply-view" type="flex" class="article-comment-reply"
+            <van-row id="#comment-reply-view" type="flex" class="apArticle-comment-reply"
                      v-for="(item, index) in commentReplies" :key="index">
                 <van-col span="3">
-                    <van-image round src="https://p3.pstatp.com/thumb/1480/7186611868" class="article-avatar"></van-image>
+                    <van-image round src="https://p3.pstatp.com/thumb/1480/7186611868" class="apArticle-avatar"></van-image>
                 </van-col>
                 <van-col span="21">
                     <van-row type="flex" align="center" justify="space-between">

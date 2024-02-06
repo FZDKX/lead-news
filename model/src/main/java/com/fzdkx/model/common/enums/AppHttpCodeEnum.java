@@ -12,7 +12,7 @@ public enum AppHttpCodeEnum {
     NEED_LOGIN(1, "需要登录后操作"),
     LOGIN_PASSWORD_ERROR(2, "密码错误"),
     LOGIN_USER_EXIST(3, "用户不存在"),
-    LOGIN_EMPTY(4,"手机号或密码为空"),
+    APP_LOGIN_EMPTY(4,"手机号或密码为空"),
     // token判断
     TOKEN_INVALID(50, "无效的TOKEN"),
     TOKEN_EXPIRE(51, "TOKEN已过期"),
@@ -31,7 +31,10 @@ public enum AppHttpCodeEnum {
     DATA_NOT_EXIST(1002, "数据不存在"),
     // 权限错误 3000~3500
     NO_OPERATOR_AUTH(3000, "无权限操作"),
-    NEED_ADMIN(3001, "需要管理员权限");
+    NEED_ADMIN(3001, "需要管理员权限"),
+    // media错误
+    MEDIA_LOGIN_EMPTY(4001,"账号或密码为空"),
+    MEDIA_LOGIN_ERROR(4002,"用户名或密码错误");
     int code;
     String message;
 

@@ -2,8 +2,8 @@ package com.fzdkx.article.controller;
 
 import com.fzdkx.article.service.ArticleService;
 import com.fzdkx.common.constants.ArticleConstants;
-import com.fzdkx.model.article.bean.Article;
-import com.fzdkx.model.article.dto.ArticleHomeDto;
+import com.fzdkx.model.article.bean.ApArticle;
+import com.fzdkx.model.article.dto.ApArticleHomeDto;
 import com.fzdkx.model.common.dto.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,15 +24,15 @@ public class ArticleController {
     private ArticleService articleService;
 
     @PostMapping("/load")
-    public Result<List<Article>> load(@RequestBody ArticleHomeDto articleHomeDto){
-        return articleService.loadArticleList(articleHomeDto, ArticleConstants.LOAD_TYPE_MORE);
+    public Result<List<ApArticle>> load(@RequestBody ApArticleHomeDto apArticleHomeDto){
+        return articleService.loadArticleList(apArticleHomeDto, ArticleConstants.LOAD_TYPE_MORE);
     }
     @PostMapping("/loadmore")
-    public Result<List<Article>> loadMore(@RequestBody ArticleHomeDto articleHomeDto){
-        return articleService.loadArticleList(articleHomeDto, ArticleConstants.LOAD_TYPE_MORE);
+    public Result<List<ApArticle>> loadMore(@RequestBody ApArticleHomeDto apArticleHomeDto){
+        return articleService.loadArticleList(apArticleHomeDto, ArticleConstants.LOAD_TYPE_MORE);
     }
     @PostMapping("/loadnew")
-    public Result<List<Article>> loadNew(@RequestBody ArticleHomeDto articleHomeDto){
-        return articleService.loadArticleList(articleHomeDto, ArticleConstants.LOAD_TYPE_NEW);
+    public Result<List<ApArticle>> loadNew(@RequestBody ApArticleHomeDto apArticleHomeDto){
+        return articleService.loadArticleList(apArticleHomeDto, ArticleConstants.LOAD_TYPE_NEW);
     }
 }

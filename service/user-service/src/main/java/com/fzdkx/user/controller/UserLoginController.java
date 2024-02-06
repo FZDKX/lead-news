@@ -1,7 +1,7 @@
 package com.fzdkx.user.controller;
 
 import com.fzdkx.model.common.dto.Result;
-import com.fzdkx.model.user.dto.UserLoginDto;
+import com.fzdkx.model.user.dto.ApUserLoginDto;
 import com.fzdkx.user.service.UserLoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +22,7 @@ public class UserLoginController {
 
     @PostMapping("/login_auth")
     @Operation(summary = "用户登录方法")
-    public Result<String> login(@RequestBody UserLoginDto userLoginDto) {
-        return userLoginService.login(userLoginDto);
+    public Result<String> login(@RequestBody ApUserLoginDto apUserLoginDto) {
+        return userLoginService.login(apUserLoginDto);
     }
 }

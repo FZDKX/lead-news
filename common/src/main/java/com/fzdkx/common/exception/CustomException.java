@@ -8,7 +8,7 @@ import com.fzdkx.model.common.enums.AppHttpCodeEnum;
  * 自定义异常顶级类
  */
 public class CustomException extends RuntimeException{
-    private AppHttpCodeEnum appHttpCodeEnum;
+    private final AppHttpCodeEnum appHttpCodeEnum;
 
     public CustomException(AppHttpCodeEnum appHttpCodeEnum) {
         super(appHttpCodeEnum.getMessage());

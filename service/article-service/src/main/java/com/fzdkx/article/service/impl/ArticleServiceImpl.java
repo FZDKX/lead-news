@@ -3,8 +3,8 @@ package com.fzdkx.article.service.impl;
 import com.fzdkx.article.mapper.ArticleMapper;
 import com.fzdkx.article.service.ArticleService;
 import com.fzdkx.common.constants.ArticleConstants;
-import com.fzdkx.model.article.bean.Article;
-import com.fzdkx.model.article.dto.ArticleHomeDto;
+import com.fzdkx.model.article.bean.ApArticle;
+import com.fzdkx.model.article.dto.ApArticleHomeDto;
 import com.fzdkx.model.common.dto.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,27 +23,27 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleMapper articleMapper;
 
     @Override
-    public Result<List<Article>> loadArticleList(ArticleHomeDto articleHomeDto, Integer loadType) {
+    public Result<List<ApArticle>> loadArticleList(ApArticleHomeDto apArticleHomeDto, Integer loadType) {
         // size参数校验
-        Integer size = articleHomeDto.getSize();
+        Integer size = apArticleHomeDto.getSize();
         if (size == null || size <= 0) {
             size = ArticleConstants.DEFAULT_SIZE;
         }
-        articleHomeDto.setSize(Math.min(size, ArticleConstants.MAX_SIZE));
+        apArticleHomeDto.setSize(Math.min(size, ArticleConstants.MAX_SIZE));
         // tag校验
-        String tag = articleHomeDto.getTag();
+        String tag = apArticleHomeDto.getTag();
         if (!StringUtils.hasLength(tag)) {
-            articleHomeDto.setTag(ArticleConstants.LOAD_TAG_DEFAULT);
+            apArticleHomeDto.setTag(ArticleConstants.LOAD_TAG_DEFAULT);
         }
         // 时间校验
-        if (articleHomeDto.getMaxBehotTime() == null) {
-            articleHomeDto.setMaxBehotTime(new Date());
+        if (apArticleHomeDto.getMaxBehotTime() == null) {
+            apArticleHomeDto.setMaxBehotTime(new Date());
         }
-        if (articleHomeDto.getMinBehotTime() == null) {
-            articleHomeDto.setMinBehotTime(new Date());
+        if (apArticleHomeDto.getMinBehotTime() == null) {
+            apArticleHomeDto.setMinBehotTime(new Date());
         }
         // 查询数据库
-        List<Article> articles = articleMapper.loadArticleList(articleHomeDto, loadType);
-        return Result.success(articles);
+        List<ApArticle> apArticles = articleMapper.loadArticleList(apArticleHomeDto, loadType);
+        return Result.success(apArticles);
     }
 }

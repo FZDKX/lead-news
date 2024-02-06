@@ -1,7 +1,7 @@
 package com.fzdkx.article.mapper;
 
-import com.fzdkx.model.article.bean.Article;
-import com.fzdkx.model.article.dto.ArticleHomeDto;
+import com.fzdkx.model.article.bean.ApArticle;
+import com.fzdkx.model.article.dto.ApArticleHomeDto;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  * @create 2024/2/4
  */
 public interface ArticleMapper {
-    List<Article> loadArticleList(@Param("articleHomeDto") ArticleHomeDto articleHomeDto, @Param("loadType") Integer loadType);
+    List<ApArticle> loadArticleList(@Param("apArticleHomeDto") ApArticleHomeDto apArticleHomeDto, @Param("loadType") Integer loadType);
 
-    void updateStaticUrl(@Param("article") Article article);
+    void updateStaticUrl(@Param("apArticle") ApArticle apArticle);
 }

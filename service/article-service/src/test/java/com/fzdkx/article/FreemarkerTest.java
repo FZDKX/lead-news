@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fzdkx.article.mapper.ArticleContentMapper;
 import com.fzdkx.article.mapper.ArticleMapper;
 import com.fzdkx.file.service.FileStorageService;
-import com.fzdkx.model.article.bean.Article;
-import com.fzdkx.model.article.bean.ArticleContent;
-import com.fzdkx.model.article.bean.ArticleContentNode;
+import com.fzdkx.model.article.bean.ApArticle;
+import com.fzdkx.model.article.bean.ApArticleContent;
+import com.fzdkx.model.article.bean.ApArticleContentNode;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.junit.Test;
@@ -41,21 +41,21 @@ public class FreemarkerTest {
 
     @Test
     public void createHtml() throws Exception {
-        ArticleContent articleContent =
+        ApArticleContent apArticleContent =
                 articleContentMapper.selectArticleContentById(1302862387124125698L);
-        if (articleContent != null && StringUtils.hasLength(articleContent.getContent())){
+        if (apArticleContent != null && StringUtils.hasLength(apArticleContent.getContent())){
             StringWriter stringWriter = new StringWriter();
-            Template template = configuration.getTemplate("article.ftl");
-            List<ArticleContentNode> list = objectMapper.readValue(articleContent.getContent(), List.class);
+            Template template = configuration.getTemplate("apArticle.ftl");
+            List<ApArticleContentNode> list = objectMapper.readValue(apArticleContent.getContent(), List.class);
             Map<String, Object> map = new HashMap<>();
             map.put("content",list);
             template.process(map,stringWriter);
             ByteArrayInputStream bais = new ByteArrayInputStream(stringWriter.toString().getBytes());
-            String path = fileStorageService.uploadHtmlFile("", articleContent.getArticleId() + ".html", bais);
-            Article article = new Article();
-            article.setId(articleContent.getArticleId());
-            article.setStaticUrl(path);
-            articleMapper.updateStaticUrl(article);
+            String path = fileStorageService.uploadHtmlFile("", apArticleContent.getArticleId() + ".html", bais);
+            ApArticle apArticle = new ApArticle();
+            apArticle.setId(apArticleContent.getArticleId());
+            apArticle.setStaticUrl(path);
+            articleMapper.updateStaticUrl(apArticle);
         }
     }
 }

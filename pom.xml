@@ -16,10 +16,10 @@
         <module>gateway</module>
         <module>service</module>
         <module>test</module>
-        <module>service/user-service</module>
-        <module>service/article-service</module>
         <module>basic</module>
         <module>basic/fzdkx-file-starter</module>
+        <module>gateway/app-gateway</module>
+        <module>gateway/media-gateway</module>
     </modules>
 
     <!--继承SpringBoot-->

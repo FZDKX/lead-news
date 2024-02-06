@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fzdkx.media.mapper.MediaUserMapper">
+    <update id="updateLoginTime">
+        update wm_user
+        set login_time = #{user.loginTime}
+        where id = #{user.id}
+    </update>
+    <select id="selectUserByName" resultType="com.fzdkx.model.media.bean.MediaUser">
+        select * from wm_user
+        where name = #{name}
+    </select>
+</mapper>

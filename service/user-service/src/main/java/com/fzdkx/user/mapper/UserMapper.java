@@ -1,6 +1,6 @@
 package com.fzdkx.user.mapper;
 
-import com.fzdkx.model.user.bean.User;
+import com.fzdkx.model.user.bean.ApUser;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Param;
  * @create 2024/2/3
  */
 public interface UserMapper {
-    User getUserByPhone(@Param("phone") String phone);
+    ApUser getUserByPhone(@Param("phone") String phone);
 }
