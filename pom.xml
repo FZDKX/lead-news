@@ -43,6 +43,8 @@
         <mybatis.starter.version>3.0.3</mybatis.starter.version>
         <knife4j.version>4.3.0</knife4j.version>
         <minio.version>8.5.7</minio.version>
+        <ali.core.version>4.1.1</ali.core.version>
+        <ali.green.version>3.4.1</ali.green.version>
     </properties>
 
     <!--定义依赖版本-->
@@ -92,6 +94,17 @@
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
+            </dependency>
+            <!--aliyun-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>${ali.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-green</artifactId>
+                <version>${ali.green.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

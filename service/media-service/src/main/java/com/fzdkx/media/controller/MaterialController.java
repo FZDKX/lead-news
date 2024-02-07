@@ -31,7 +31,7 @@ public class MaterialController {
     }
 
     @PostMapping("/list")
-    public PageRequestResult<List<MediaMaterial>> list(@RequestBody MaterialListDto dto){
+    public Result<List<MediaMaterial>> list(@RequestBody MaterialListDto dto){
         return materialService.list(dto);
     }
 }

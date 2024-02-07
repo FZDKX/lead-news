@@ -36,7 +36,8 @@ public enum AppHttpCodeEnum {
     MEDIA_LOGIN_EMPTY(4001, "账号或密码为空"),
     MEDIA_LOGIN_ERROR(4002, "用户名或密码错误"),
     // 文件操作错误
-    FILE_UPLOAD_ERROR(5001, "文件上传失败");
+    FILE_UPLOAD_ERROR(5001, "文件上传失败"),
+    MATERIAL_REFERENCE_FAIL(5002,"素材已被删除" );
     int code;
     String message;
 

@@ -1,5 +1,7 @@
 package com.fzdkx.common.config;
 
+import com.fzdkx.common.aliyun.GreenImageScan;
+import com.fzdkx.common.aliyun.GreenTextScan;
 import com.fzdkx.common.exception.ExceptionCatch;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -28,5 +30,15 @@ public class CommonAutoConfiguration {
                         .version("1.0")
                         .contact(new Contact().name("fzdkx").email("test@gmail.com"))
                         .description("看星头条API文档"));
+    }
+
+    @Bean
+    public GreenTextScan greenTextScan(){
+        return new GreenTextScan();
+    }
+
+    @Bean
+    public GreenImageScan greenImageScan(){
+        return new GreenImageScan();
     }
 }

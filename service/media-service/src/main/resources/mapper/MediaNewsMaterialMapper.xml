@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fzdkx.media.mapper.MediaNewsMaterialMapper">
+    <insert id="save">
+        insert into wm_news_material
+        (material_id , news_id , type)
+        values
+        <foreach collection="ids" item="id" separator=",">
+            (id , #{newsId} , #{type})
+        </foreach>
+    </insert>
+    <delete id="deleteByNewsId">
+        delete from wm_news_material
+        where news_id = #{newsId}
+    </delete>
+</mapper>

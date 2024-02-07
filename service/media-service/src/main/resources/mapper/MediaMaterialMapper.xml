@@ -10,4 +10,11 @@
         where is_collection = #{isCollection} and user_id = #{userId}
         order by created_time desc
     </select>
+    <select id="getIds" resultType="java.lang.Long">
+        select id from wm_material
+        where url in 
+        <foreach collection="images" item="image" open="(" close=")" separator=",">
+            #{images}
+        </foreach>
+    </select>
 </mapper>

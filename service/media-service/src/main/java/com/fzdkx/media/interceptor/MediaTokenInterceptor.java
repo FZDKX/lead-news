@@ -36,7 +36,7 @@ public class MediaTokenInterceptor implements HandlerInterceptor {
                            HttpServletResponse response,
                            Object handler,
                            ModelAndView modelAndView) throws Exception {
-        log.info("正在请求ThreadLocal中的用户信息");
+        log.info("正在清理ThreadLocal中的用户信息");
         MediaThreadLocalUtil.clear();
     }
 }

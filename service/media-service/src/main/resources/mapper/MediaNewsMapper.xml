@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fzdkx.media.mapper.MediaNewsMapper">
+    <insert id="saveNews">
+        insert into wm_news
+        (user_id, title, content, type, channel_id, labels, created_time, submited_time, status, publish_time, reason, article_id, images)
+        values
+        (#{mediaNews.userId} ,#{mediaNews.title}, #{mediaNews.content} , #{mediaNews.type} , #{mediaNews.channelId} , #{mediaNews.labels}, #{mediaNews.createdTime} ,
+         #{mediaNews.submitedTime} ,#{mediaNews.status}, #{mediaNews.publishTime} , #{mediaNews.reason} , #{mediaNews.articleId} , #{mediaNews.images})
+    </insert>
+    <update id="updateNews">
+        update wm_news
+        <set>
+            <if test="mediaNews.userId != null">
+                user_id = #{mediaNews.userId} ,
+            </if>
+            <if test="mediaNews.title != null">
+                title = #{mediaNews.title} ,
+            </if>
+            <if test="mediaNews.content != null">
+                content = #{mediaNews.content} ,
+            </if>
+            <if test="mediaNews.type != null">
+                type = #{mediaNews.type} ,
+            </if>
+            <if test="mediaNews.channelId != null">
+                channel_id = #{mediaNews.channelId} ,
+            </if>
+            <if test="mediaNews.labels != null">
+                labels = #{mediaNews.labels} ,
+            </if>
+            <if test="mediaNews.submitedTime != null">
+                submited_time = #{mediaNews.submitedTime} ,
+            </if>
+            <if test="mediaNews.status != null">
+                status = #{mediaNews.status} ,
+            </if>
+            <if test="mediaNews.publishTime != null">
+                publish_time = #{mediaNews.publishTime} ,
+            </if>
+            <if test="mediaNews.reason != null">
+                reason = #{mediaNews.reason} ,
+            </if>
+            <if test="mediaNews.articleId != null">
+                article_id = #{mediaNews.articleId} ,
+            </if>
+            <if test="mediaNews.images != null">
+                images = #{mediaNews.images} ,
+            </if>
+            <if test="mediaNews.enable != null">
+                enable = #{mediaNews.enable}
+            </if>
+        </set>
+        where id == #{mediaNews.id}
+    </update>
+    <select id="selectNewsList" resultType="com.fzdkx.model.media.bean.MediaNews">
+        select * from wm_news
+        <where>
+            <if test="dto.status != null">
+                and status = #{dto.status}
+            </if>
+            <if test="dto.channelId != null">
+                and channel_id = #{dto.channelId}
+            </if>
+            <if test="dto.keyword != null and dto.keyword != ''">
+                and title like concat('%',#{dto.keyword},'%')
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="dto.beginPubDate != null">
+                and created_time &gt;= #{dto.beginPubDate}
+            </if>
+            <if test="dto.endPubDate != null">
+                and created_time &lt;= #{dto.endPubDate}
+            </if>
+        </where>
+    </select>
+</mapper>
