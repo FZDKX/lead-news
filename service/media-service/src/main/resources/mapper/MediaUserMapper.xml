@@ -10,4 +10,8 @@
         select * from wm_user
         where name = #{name}
     </select>
+    <select id="selectById" resultType="com.fzdkx.model.media.bean.MediaUser">
+        select * from wm_user
+        where id = #{id}
+    </select>
 </mapper>

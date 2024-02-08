@@ -2,6 +2,7 @@ package com.fzdkx.article.service;
 
 import com.fzdkx.model.article.bean.ApArticle;
 import com.fzdkx.model.article.dto.ApArticleHomeDto;
+import com.fzdkx.model.article.dto.ArticleDto;
 import com.fzdkx.model.common.vo.Result;
 
 import java.util.List;
@@ -12,4 +13,6 @@ import java.util.List;
  */
 public interface ArticleService {
     Result<List<ApArticle>> loadArticleList(ApArticleHomeDto apArticleHomeDto, Integer loadType);
+
+    Result<Long> saveArticle(ArticleDto dto);
 }

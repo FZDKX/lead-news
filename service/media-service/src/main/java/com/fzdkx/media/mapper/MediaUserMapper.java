@@ -13,4 +13,6 @@ public interface MediaUserMapper {
 
     MediaUser selectUserByName(@Param("name") String name);
     void updateLoginTime(@Param("user") MediaUser user);
+
+    MediaUser selectById(Long userId);
 }

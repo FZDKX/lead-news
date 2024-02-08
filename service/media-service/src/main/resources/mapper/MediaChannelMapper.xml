@@ -5,4 +5,8 @@
     <select id="selectChannelList" resultType="com.fzdkx.model.media.bean.MediaChannel">
         select * from wm_channel
     </select>
+    <select id="selectById" resultType="com.fzdkx.model.media.bean.MediaChannel">
+        select * from wm_channel
+        where id = #{id}
+    </select>
 </mapper>

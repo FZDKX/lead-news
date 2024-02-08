@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fzdkx.article.mapper.ArticleConfigMapper">
+    <resultMap id="BaseResultMap" type="com.fzdkx.model.article.bean.ApArticleConfig">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="article_id" jdbcType="BIGINT" property="articleId" />
+        <result column="is_comment" jdbcType="TINYINT" property="isComment" />
+        <result column="is_forward" jdbcType="TINYINT" property="isForward" />
+        <result column="is_down" jdbcType="TINYINT" property="isDown" />
+        <result column="is_delete" jdbcType="TINYINT" property="isDelete" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, article_id, is_comment, is_forward, is_down, is_delete
+    </sql>
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ap_article_config
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from ap_article_config
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.fzdkx.model.article.bean.ApArticleConfig">
+        insert into ap_article_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="articleId != null">
+                article_id,
+            </if>
+            <if test="isComment != null">
+                is_comment,
+            </if>
+            <if test="isForward != null">
+                is_forward,
+            </if>
+            <if test="isDown != null">
+                is_down,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="articleId != null">
+                #{articleId,jdbcType=BIGINT},
+            </if>
+            <if test="isComment != null">
+                #{isComment,jdbcType=TINYINT},
+            </if>
+            <if test="isForward != null">
+                #{isForward,jdbcType=TINYINT},
+            </if>
+            <if test="isDown != null">
+                #{isDown,jdbcType=TINYINT},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.fzdkx.model.article.bean.ApArticleConfig">
+        update ap_article_config
+        <set>
+            <if test="articleId != null">
+                article_id = #{articleId,jdbcType=BIGINT},
+            </if>
+            <if test="isComment != null">
+                is_comment = #{isComment,jdbcType=TINYINT},
+            </if>
+            <if test="isForward != null">
+                is_forward = #{isForward,jdbcType=TINYINT},
+            </if>
+            <if test="isDown != null">
+                is_down = #{isDown,jdbcType=TINYINT},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

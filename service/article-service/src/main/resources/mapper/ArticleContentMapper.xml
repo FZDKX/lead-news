@@ -5,4 +5,67 @@
         select * from ap_article_content
         where article_id = #{articleId}
     </select>
+
+    <resultMap id="BaseResultMap" type="com.fzdkx.model.article.bean.ApArticleContent">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="article_id" jdbcType="BIGINT" property="articleId" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.fzdkx.model.article.bean.ApArticleContent">
+        <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, article_id
+    </sql>
+    <sql id="Blob_Column_List">
+        content
+    </sql>
+    <select id="selectById" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from ap_article_content
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from ap_article_content
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.fzdkx.model.article.bean.ApArticleContent">
+        insert into ap_article_content
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="articleId != null">
+                article_id,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="articleId != null">
+                #{articleId,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.fzdkx.model.article.bean.ApArticleContent">
+        update ap_article_content
+        <set>
+            <if test="articleId != null">
+                article_id = #{articleId,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

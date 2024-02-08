@@ -12,4 +12,5 @@ import java.util.List;
 public interface MediaChannelMapper {
     List<MediaChannel> selectChannelList();
 
+    MediaChannel selectById(Integer channelId);
 }

@@ -2,23 +2,11 @@ package com.fzdkx.model.article.bean;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
-/**
- * 文章内容实体类
- */
 @Data
-public class ApArticleContent implements Serializable {
-
+public class ApArticleContent {
     private Long id;
 
-    /**
-     * 文章id
-     */
     private Long articleId;
 
-    /**
-     * 文章内容
-     */
     private String content;
 }

@@ -55,7 +55,7 @@ public class FreemarkerTest {
             ApArticle apArticle = new ApArticle();
             apArticle.setId(apArticleContent.getArticleId());
             apArticle.setStaticUrl(path);
-            articleMapper.updateStaticUrl(apArticle);
+            articleMapper.update(apArticle);
         }
     }
 }

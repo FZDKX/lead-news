@@ -37,7 +37,11 @@ public enum AppHttpCodeEnum {
     MEDIA_LOGIN_ERROR(4002, "用户名或密码错误"),
     // 文件操作错误
     FILE_UPLOAD_ERROR(5001, "文件上传失败"),
-    MATERIAL_REFERENCE_FAIL(5002,"素材已被删除" );
+    CREATE_HTML_ERROR(5002, "html文件生成错误"),
+    MATERIAL_REFERENCE_FAIL(5002,"素材已被删除" ),
+    ARTICLE_PUBLISH_ERROR(5003,"文章发布失败" ),
+    // aliyun 操作错误
+    ALIYUN_ERROR(6001,"文件检测失败" );
     int code;
     String message;
 

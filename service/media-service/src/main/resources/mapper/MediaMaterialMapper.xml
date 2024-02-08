@@ -14,7 +14,7 @@
         select id from wm_material
         where url in 
         <foreach collection="images" item="image" open="(" close=")" separator=",">
-            #{images}
+            #{image}
         </foreach>
     </select>
 </mapper>

@@ -9,4 +9,12 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface ArticleContentMapper {
     ApArticleContent selectArticleContentById(@Param("articleId") Long articleId);
+
+    int deleteById(Long id);
+
+    int insert(ApArticleContent row);
+
+    ApArticleContent selectById(Long id);
+
+    int update(ApArticleContent row);
 }

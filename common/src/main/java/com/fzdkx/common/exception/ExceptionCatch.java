@@ -21,6 +21,7 @@ public class ExceptionCatch {
     @ExceptionHandler(CustomException.class)
     @ResponseBody
     public Result<String> exception(CustomException e) {
+        e.printStackTrace();
         log.error("捕获到异常：{}", e.getMessage());
         return Result.error(e.getAppHttpCodeEnum());
     }

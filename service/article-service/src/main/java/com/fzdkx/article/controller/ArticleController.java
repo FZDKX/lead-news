@@ -4,6 +4,7 @@ import com.fzdkx.article.service.ArticleService;
 import com.fzdkx.common.constants.ArticleConstants;
 import com.fzdkx.model.article.bean.ApArticle;
 import com.fzdkx.model.article.dto.ApArticleHomeDto;
+import com.fzdkx.model.article.dto.ArticleDto;
 import com.fzdkx.model.common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,5 +35,10 @@ public class ArticleController {
     @PostMapping("/loadnew")
     public Result<List<ApArticle>> loadNew(@RequestBody ApArticleHomeDto apArticleHomeDto){
         return articleService.loadArticleList(apArticleHomeDto, ArticleConstants.LOAD_TYPE_NEW);
+    }
+
+    @PostMapping("/save")
+    public Result<Long> save(@RequestBody ArticleDto dto){
+        return articleService.saveArticle(dto);
     }
 }

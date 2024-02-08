@@ -3,6 +3,7 @@ package com.fzdkx.article;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * @author 发着呆看星
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @MapperScan("com.fzdkx.article.mapper")
+@EnableAsync
 public class ArticleApplication {
     public static void main(String[] args) {
         SpringApplication.run(ArticleApplication.class,args);

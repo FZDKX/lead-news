@@ -13,5 +13,12 @@ import java.util.List;
 public interface ArticleMapper {
     List<ApArticle> loadArticleList(@Param("apArticleHomeDto") ApArticleHomeDto apArticleHomeDto, @Param("loadType") Integer loadType);
 
-    void updateStaticUrl(@Param("apArticle") ApArticle apArticle);
+    int deleteById(Long id);
+
+    int insert(ApArticle article);
+
+    ApArticle selectById(Long id);
+
+    int update(ApArticle article);
+
 }

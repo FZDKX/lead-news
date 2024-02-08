@@ -1,8 +1,8 @@
 package com.fzdkx.common.config;
 
-import com.fzdkx.common.aliyun.GreenImageScan;
-import com.fzdkx.common.aliyun.GreenTextScan;
 import com.fzdkx.common.exception.ExceptionCatch;
+import com.fzdkx.common.aliyun.AliYunClient;
+import com.fzdkx.common.aliyun.Scan;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -33,12 +33,12 @@ public class CommonAutoConfiguration {
     }
 
     @Bean
-    public GreenTextScan greenTextScan(){
-        return new GreenTextScan();
+    public AliYunClient aliYunClient(){
+        return new AliYunClient();
     }
 
     @Bean
-    public GreenImageScan greenImageScan(){
-        return new GreenImageScan();
+    public Scan scanText(){
+        return new Scan();
     }
 }

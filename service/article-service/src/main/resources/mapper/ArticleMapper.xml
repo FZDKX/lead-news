@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fzdkx.article.mapper.ArticleMapper">
-    <update id="updateStaticUrl">
-        update ap_article
-        set static_url = #{apArticle.staticUrl}
-        where id = #{apArticle.id}
-    </update>
 
     <select id="loadArticleList" resultType="com.fzdkx.model.article.bean.ApArticle">
         select * from ap_article aa
@@ -26,4 +21,254 @@
         order by aa.publish_time desc
         limit #{apArticleHomeDto.size}
     </select>
+
+
+    <resultMap id="BaseResultMap" type="com.fzdkx.model.article.bean.ApArticle">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="author_id" jdbcType="INTEGER" property="authorId" />
+        <result column="author_name" jdbcType="VARCHAR" property="authorName" />
+        <result column="channel_id" jdbcType="INTEGER" property="channelId" />
+        <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
+        <result column="layout" jdbcType="TINYINT" property="layout" />
+        <result column="flag" jdbcType="TINYINT" property="flag" />
+        <result column="images" jdbcType="VARCHAR" property="images" />
+        <result column="labels" jdbcType="VARCHAR" property="labels" />
+        <result column="likes" jdbcType="INTEGER" property="likes" />
+        <result column="collection" jdbcType="INTEGER" property="collection" />
+        <result column="comment" jdbcType="INTEGER" property="comment" />
+        <result column="views" jdbcType="INTEGER" property="views" />
+        <result column="province_id" jdbcType="INTEGER" property="provinceId" />
+        <result column="city_id" jdbcType="INTEGER" property="cityId" />
+        <result column="county_id" jdbcType="INTEGER" property="countyId" />
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+        <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+        <result column="sync_status" jdbcType="BIT" property="syncStatus" />
+        <result column="origin" jdbcType="TINYINT" property="origin" />
+        <result column="static_url" jdbcType="VARCHAR" property="staticUrl" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, title, author_id, author_name, channel_id, channel_name, layout, flag, images,
+    labels, likes, collection, comment, views, province_id, city_id, county_id, created_time,
+    publish_time, sync_status, origin, static_url
+    </sql>
+    <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ap_article
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from ap_article
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.fzdkx.model.article.bean.ApArticle">
+        insert into ap_article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="authorId != null">
+                author_id,
+            </if>
+            <if test="authorName != null">
+                author_name,
+            </if>
+            <if test="channelId != null">
+                channel_id,
+            </if>
+            <if test="channelName != null">
+                channel_name,
+            </if>
+            <if test="layout != null">
+                layout,
+            </if>
+            <if test="flag != null">
+                flag,
+            </if>
+            <if test="images != null">
+                images,
+            </if>
+            <if test="labels != null">
+                labels,
+            </if>
+            <if test="likes != null">
+                likes,
+            </if>
+            <if test="collection != null">
+                collection,
+            </if>
+            <if test="comment != null">
+                comment,
+            </if>
+            <if test="views != null">
+                views,
+            </if>
+            <if test="provinceId != null">
+                province_id,
+            </if>
+            <if test="cityId != null">
+                city_id,
+            </if>
+            <if test="countyId != null">
+                county_id,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="publishTime != null">
+                publish_time,
+            </if>
+            <if test="syncStatus != null">
+                sync_status,
+            </if>
+            <if test="origin != null">
+                origin,
+            </if>
+            <if test="staticUrl != null">
+                static_url,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="authorId != null">
+                #{authorId,jdbcType=INTEGER},
+            </if>
+            <if test="authorName != null">
+                #{authorName,jdbcType=VARCHAR},
+            </if>
+            <if test="channelId != null">
+                #{channelId,jdbcType=INTEGER},
+            </if>
+            <if test="channelName != null">
+                #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="layout != null">
+                #{layout,jdbcType=TINYINT},
+            </if>
+            <if test="flag != null">
+                #{flag,jdbcType=TINYINT},
+            </if>
+            <if test="images != null">
+                #{images,jdbcType=VARCHAR},
+            </if>
+            <if test="labels != null">
+                #{labels,jdbcType=VARCHAR},
+            </if>
+            <if test="likes != null">
+                #{likes,jdbcType=INTEGER},
+            </if>
+            <if test="collection != null">
+                #{collection,jdbcType=INTEGER},
+            </if>
+            <if test="comment != null">
+                #{comment,jdbcType=INTEGER},
+            </if>
+            <if test="views != null">
+                #{views,jdbcType=INTEGER},
+            </if>
+            <if test="provinceId != null">
+                #{provinceId,jdbcType=INTEGER},
+            </if>
+            <if test="cityId != null">
+                #{cityId,jdbcType=INTEGER},
+            </if>
+            <if test="countyId != null">
+                #{countyId,jdbcType=INTEGER},
+            </if>
+            <if test="createdTime != null">
+                #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="publishTime != null">
+                #{publishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="syncStatus != null">
+                #{syncStatus,jdbcType=BIT},
+            </if>
+            <if test="origin != null">
+                #{origin,jdbcType=TINYINT},
+            </if>
+            <if test="staticUrl != null">
+                #{staticUrl,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.fzdkx.model.article.bean.ApArticle">
+        update ap_article
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="authorId != null">
+                author_id = #{authorId,jdbcType=INTEGER},
+            </if>
+            <if test="authorName != null">
+                author_name = #{authorName,jdbcType=VARCHAR},
+            </if>
+            <if test="channelId != null">
+                channel_id = #{channelId,jdbcType=INTEGER},
+            </if>
+            <if test="channelName != null">
+                channel_name = #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="layout != null">
+                layout = #{layout,jdbcType=TINYINT},
+            </if>
+            <if test="flag != null">
+                flag = #{flag,jdbcType=TINYINT},
+            </if>
+            <if test="images != null">
+                images = #{images,jdbcType=VARCHAR},
+            </if>
+            <if test="labels != null">
+                labels = #{labels,jdbcType=VARCHAR},
+            </if>
+            <if test="likes != null">
+                likes = #{likes,jdbcType=INTEGER},
+            </if>
+            <if test="collection != null">
+                collection = #{collection,jdbcType=INTEGER},
+            </if>
+            <if test="comment != null">
+                comment = #{comment,jdbcType=INTEGER},
+            </if>
+            <if test="views != null">
+                views = #{views,jdbcType=INTEGER},
+            </if>
+            <if test="provinceId != null">
+                province_id = #{provinceId,jdbcType=INTEGER},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=INTEGER},
+            </if>
+            <if test="countyId != null">
+                county_id = #{countyId,jdbcType=INTEGER},
+            </if>
+            <if test="createdTime != null">
+                created_time = #{createdTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="publishTime != null">
+                publish_time = #{publishTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="syncStatus != null">
+                sync_status = #{syncStatus,jdbcType=BIT},
+            </if>
+            <if test="origin != null">
+                origin = #{origin,jdbcType=TINYINT},
+            </if>
+            <if test="staticUrl != null">
+                static_url = #{staticUrl,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 </mapper>

@@ -1,15 +1,12 @@
 package com.fzdkx.media.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fzdkx.common.constants.MediaConstants;
 import com.fzdkx.common.exception.CustomException;
 import com.fzdkx.media.mapper.MediaMaterialMapper;
 import com.fzdkx.media.mapper.MediaNewsMapper;
 import com.fzdkx.media.mapper.MediaNewsMaterialMapper;
+import com.fzdkx.media.service.MediaNewsAutoScanService;
 import com.fzdkx.media.service.MediaNewsService;
-import com.fzdkx.model.article.bean.ApArticleContentNode;
 import com.fzdkx.model.common.enums.AppHttpCodeEnum;
 import com.fzdkx.model.common.vo.PageRequestResult;
 import com.fzdkx.model.common.vo.Result;
@@ -25,9 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author 发着呆看星
@@ -41,6 +36,8 @@ public class MediaNewsServiceImpl implements MediaNewsService {
     private MediaNewsMaterialMapper newsMaterialMapper;
     @Autowired
     private MediaMaterialMapper materialMapper;
+    @Autowired
+    private MediaNewsAutoScanService mediaNewsAutoScanService;
 
     @Override
     public Result<List<MediaNews>> getNewsList(MediaNewsPageReqDto dto) {
@@ -73,10 +70,10 @@ public class MediaNewsServiceImpl implements MediaNewsService {
         }
         MediaNews mediaNews = new MediaNews();
         BeanUtils.copyProperties(dto, mediaNews);
-        // 获取图片素材url
-        List<String> imageList = getImageList(mediaNews.getContent());
-        // 处理文章数据
-        handleNewsData(mediaNews, imageList);
+        // 获取封面图片
+        List<String> images = dto.getImages();
+        // 处理文章封面
+        handleNewsImage(mediaNews, images);
         // 保存数据
         save(mediaNews);
         // 如果要发布文章
@@ -84,7 +81,9 @@ public class MediaNewsServiceImpl implements MediaNewsService {
             // 清除文章之前与素材的联系
             newsMaterialMapper.deleteByNewsId(mediaNews.getId());
             // 重新建立素材与文章之间的联系
-            relevanceNewsAndImage(mediaNews, dto.getImages());
+            relevanceNewsAndImage(mediaNews);
+            // 进行自动审核
+            mediaNewsAutoScanService.autoScanWmNews(mediaNews.getId());
         }
         return Result.success();
     }
@@ -92,13 +91,9 @@ public class MediaNewsServiceImpl implements MediaNewsService {
     /**
      * 处理news数据
      */
-    public void handleNewsData(MediaNews mediaNews, List<String> imageList) {
-        // 建立文章与素材间的关系
-        // 1.处理图片格式保存
-        String images = handleNewsImages(imageList);
+    public void handleNewsImage(MediaNews mediaNews, List<String> imageList) {
+        String images = handleNewsType(mediaNews, imageList);
         mediaNews.setImages(images);
-        // 2.设置文章布局
-        handleNewsType(mediaNews, imageList);
     }
 
     /**
@@ -121,77 +116,72 @@ public class MediaNewsServiceImpl implements MediaNewsService {
     }
 
     /**
-     * 从文本中获取图片
-     */
-    public List<String> getImageList(String content){
-        List<String> list = null;
-        if (StringUtils.hasLength(content)){
-            try {
-                ObjectMapper objectMapper = new ObjectMapper();
-                List<ApArticleContentNode> jsonArray
-                        = objectMapper.readValue(content, new TypeReference<List<ApArticleContentNode>>(){});
-                list = new ArrayList<>();
-                for (ApArticleContentNode node : jsonArray) {
-                    if (MediaConstants.WM_NEWS_TYPE_IMAGE.equals(node.getType())){
-                        list.add(node.getValue());
-                    }
-                }
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return list;
-    }
-    /**
-     * 处理图片保存格式
-     * @param images 图片路径集合
-     */
-    public String handleNewsImages(List<String> images) {
-        if (images == null || images.isEmpty()) {
-            return "";
-        }
-        StringBuilder str = new StringBuilder(100);
-        for (String imag : images) {
-            str.append(imag).append(",");
-        }
-        return str.toString();
-    }
-
-    /**
      * 处理文章布局
      */
-    public void handleNewsType(MediaNews news, List<String> images) {
-        // 没有传入，默认自动
-        if (news.getType() == null) {
-            news.setType(MediaConstants.WM_NEWS_TYPE_AUTO);
-        }
-        // 如果是自动
-        if (news.getType() == MediaConstants.WM_NEWS_TYPE_AUTO) {
-            if (images.size() >= 3) {
-                news.setType(MediaConstants.WM_NEWS_NONE_IMAGE);
-            } else if (images.size() >= 1) {
-                news.setType(MediaConstants.WM_NEWS_NONE_IMAGE);
-            } else {
-                news.setType(MediaConstants.WM_NEWS_NONE_IMAGE);
+    public String handleNewsType(MediaNews news, List<String> images) {
+        StringBuilder str = new StringBuilder(100);
+        // 传入的封面为空
+        if (images.isEmpty()) {
+            // 自动
+            if (news.getType().equals(MediaConstants.WM_NEWS_TYPE_AUTO)){
+                // 获取数据
+                Map<String, Object> map = mediaNewsAutoScanService.getImageAndText(news.getContent());
+                images = (List<String>) map.get("image");
+                if (images.size() >= 3) {
+                    news.setType(MediaConstants.WM_NEWS_MANY_IMAGE);
+                    for (int i = 0; i < 3; i++) {
+                        str.append(images.get(0)).append(",");
+                    }
+                    return str.toString();
+                } else if (images.size() >= 1) {
+                    news.setType(MediaConstants.WM_NEWS_SINGLE_IMAGE);
+                    return images.get(0);
+                } else {
+                    news.setType(MediaConstants.WM_NEWS_NONE_IMAGE);
+                    return "";
+                }
             }
+            // 无图
+            if (news.getType().equals(MediaConstants.WM_NEWS_NONE_IMAGE)){
+                news.setType(MediaConstants.WM_NEWS_NONE_IMAGE);
+                return "";
+            }
+            // 其他
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID);
         }
+        // 不为空
+        // 单图
+        if (images.size() == 1 && news.getType().equals(MediaConstants.WM_NEWS_SINGLE_IMAGE)){
+            return images.get(0);
+        }
+        // 三图
+        if (images.size() == 3 && news.getType().equals(MediaConstants.WM_NEWS_MANY_IMAGE)){
+            for (String imag : images) {
+                str.append(imag).append(",");
+            }
+            return str.toString();
+        }
+        throw new CustomException(AppHttpCodeEnum.PARAM_INVALID);
     }
 
     /**
      * 数据库关联素材与文章
      */
-    public void relevanceNewsAndImage(MediaNews news, List<String> images) {
-        if (images == null || images.isEmpty()) {
+    public void relevanceNewsAndImage(MediaNews news) {
+        String images = news.getImages();
+        if (StringUtils.hasLength(images)) {
             return;
         }
+        // 获取封面集合
+        List<String> list = Arrays.stream(images.split(",")).toList();
         // 查询素材ID集合
-        List<Long> ids = materialMapper.getIds(images);
+        List<Long> ids = materialMapper.getIds(list);
         // 代表素材无效，已经被删除
         if (ids == null || ids.isEmpty()) {
             throw new CustomException(AppHttpCodeEnum.MATERIAL_REFERENCE_FAIL);
         }
         // 图片少了
-        if (images.size() != ids.size()) {
+        if (list.size() != ids.size()) {
             throw new CustomException(AppHttpCodeEnum.MATERIAL_REFERENCE_FAIL);
         }
         // 素材有效，进行关联

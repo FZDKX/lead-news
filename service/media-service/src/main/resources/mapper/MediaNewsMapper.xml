@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fzdkx.media.mapper.MediaNewsMapper">
-    <insert id="saveNews">
+    <insert id="saveNews" useGeneratedKeys="true" keyProperty="id">
         insert into wm_news
         (user_id, title, content, type, channel_id, labels, created_time, submited_time, status, publish_time, reason, article_id, images)
         values
@@ -51,7 +51,7 @@
                 enable = #{mediaNews.enable}
             </if>
         </set>
-        where id == #{mediaNews.id}
+        where id = #{mediaNews.id}
     </update>
     <select id="selectNewsList" resultType="com.fzdkx.model.media.bean.MediaNews">
         select * from wm_news
@@ -75,5 +75,9 @@
                 and created_time &lt;= #{dto.endPubDate}
             </if>
         </where>
+    </select>
+    <select id="selectById" resultType="com.fzdkx.model.media.bean.MediaNews">
+        select * from wm_news
+        where id = #{id}
     </select>
 </mapper>
