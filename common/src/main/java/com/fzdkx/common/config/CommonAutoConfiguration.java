@@ -3,6 +3,7 @@ package com.fzdkx.common.config;
 import com.fzdkx.common.exception.ExceptionCatch;
 import com.fzdkx.common.aliyun.AliYunClient;
 import com.fzdkx.common.aliyun.Scan;
+import com.fzdkx.common.tess4j.Tess4jClient;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -38,7 +39,12 @@ public class CommonAutoConfiguration {
     }
 
     @Bean
-    public Scan scanText(){
+    public Scan scan(){
         return new Scan();
+    }
+
+    @Bean
+    public Tess4jClient tess4jClient(){
+        return new Tess4jClient();
     }
 }

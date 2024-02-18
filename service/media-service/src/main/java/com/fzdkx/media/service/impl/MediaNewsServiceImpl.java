@@ -16,19 +16,24 @@ import com.fzdkx.model.media.dto.MediaNewsPageReqDto;
 import com.fzdkx.utils.MediaThreadLocalUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author 发着呆看星
  * @create 2024/2/6
  */
 @Service
+@Slf4j
 public class MediaNewsServiceImpl implements MediaNewsService {
     @Autowired
     private MediaNewsMapper newsMapper;
@@ -62,7 +67,6 @@ public class MediaNewsServiceImpl implements MediaNewsService {
     }
 
     @Override
-    @Transactional
     public Result<String> submit(MediaNewsDto dto) {
         // 校验参数
         if (dto == null) {
@@ -78,6 +82,7 @@ public class MediaNewsServiceImpl implements MediaNewsService {
         save(mediaNews);
         // 如果要发布文章
         if (MediaConstants.WM_NEWS_COMMIT.equals(mediaNews.getStatus())) {
+            log.info("正在准备发布文章，newsId：{}",mediaNews.getId());
             // 清除文章之前与素材的联系
             newsMaterialMapper.deleteByNewsId(mediaNews.getId());
             // 重新建立素材与文章之间的联系

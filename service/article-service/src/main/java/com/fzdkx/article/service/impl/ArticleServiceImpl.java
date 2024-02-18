@@ -15,6 +15,7 @@ import com.fzdkx.model.article.dto.ArticleDto;
 import com.fzdkx.model.common.enums.AppHttpCodeEnum;
 import com.fzdkx.model.common.vo.Result;
 import com.github.yitter.idgen.YitIdHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ import java.util.List;
  * @create 2024/2/4
  */
 @Service
+@Slf4j
 public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleMapper articleMapper;
@@ -89,6 +91,7 @@ public class ArticleServiceImpl implements ArticleService {
             // 分布式ID
             apArticleContent.setId(YitIdHelper.nextId());
             articleContentMapper.insert(apArticleContent);
+            log.info("文章发布完成，articleId：{}",id);
         }else {
             // 修改文章
             articleMapper.update(article);

@@ -10,6 +10,7 @@ import com.fzdkx.model.article.bean.ApArticleContentNode;
 import com.fzdkx.model.common.enums.AppHttpCodeEnum;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ import java.util.Map;
  * @create 2024/2/8
  */
 @Service
+@Slf4j
 public class ArticleFreemarkerServiceImpl implements ArticleFreemarkerService {
     @Autowired
     private Configuration configuration;
@@ -40,6 +42,7 @@ public class ArticleFreemarkerServiceImpl implements ArticleFreemarkerService {
         if (!StringUtils.hasLength(content) || article == null) {
             return;
         }
+        log.info("正在准备生成文章html页面：articleId{}",article.getId());
         try {
             // 创建输出流
             StringWriter stringWriter = new StringWriter();

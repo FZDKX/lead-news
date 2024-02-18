@@ -17,5 +17,5 @@ public interface MediaNewsMapper {
 
     void saveNews(@Param("mediaNews") MediaNews mediaNews);
 
-    MediaNews selectById(Long id);
+    MediaNews selectById(@Param("id") Long id);
 }

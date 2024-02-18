@@ -45,6 +45,7 @@
         <minio.version>8.5.7</minio.version>
         <ali.core.version>4.1.1</ali.core.version>
         <ali.green.version>3.4.1</ali.green.version>
+        <tess4j.version>4.1.1</tess4j.version>
     </properties>
 
     <!--定义依赖版本-->
@@ -105,6 +106,11 @@
                 <groupId>com.aliyun</groupId>
                 <artifactId>aliyun-java-sdk-green</artifactId>
                 <version>${ali.green.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sourceforge.tess4j</groupId>
+                <artifactId>tess4j</artifactId>
+                <version>${tess4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
