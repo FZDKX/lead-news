@@ -1,5 +1,7 @@
 package com.fzdkx.media.service;
 
+import com.fzdkx.model.media.bean.MediaNews;
+
 import java.util.Map;
 
 /**
@@ -11,7 +13,8 @@ public interface MediaNewsAutoScanService {
      * 自媒体文章审核
      * @param id  自媒体文章id
      */
-    void autoScanWmNews(Long id);
+    void autoScanWmNews(MediaNews id);
 
     Map<String,Object> getImageAndText(String content);
+
 }

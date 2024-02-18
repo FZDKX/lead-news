@@ -20,10 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -83,12 +80,8 @@ public class MediaNewsServiceImpl implements MediaNewsService {
         // 如果要发布文章
         if (MediaConstants.WM_NEWS_COMMIT.equals(mediaNews.getStatus())) {
             log.info("正在准备发布文章，newsId：{}",mediaNews.getId());
-            // 清除文章之前与素材的联系
-            newsMaterialMapper.deleteByNewsId(mediaNews.getId());
-            // 重新建立素材与文章之间的联系
-            relevanceNewsAndImage(mediaNews);
-            // 进行自动审核
-            mediaNewsAutoScanService.autoScanWmNews(mediaNews.getId());
+            // 开始进行自动审核
+            mediaNewsAutoScanService.autoScanWmNews(mediaNews);
         }
         return Result.success();
     }
@@ -169,27 +162,4 @@ public class MediaNewsServiceImpl implements MediaNewsService {
         throw new CustomException(AppHttpCodeEnum.PARAM_INVALID);
     }
 
-    /**
-     * 数据库关联素材与文章
-     */
-    public void relevanceNewsAndImage(MediaNews news) {
-        String images = news.getImages();
-        if (StringUtils.hasLength(images)) {
-            return;
-        }
-        // 获取封面集合
-        List<String> list = Arrays.stream(images.split(",")).toList();
-        // 查询素材ID集合
-        List<Long> ids = materialMapper.getIds(list);
-        // 代表素材无效，已经被删除
-        if (ids == null || ids.isEmpty()) {
-            throw new CustomException(AppHttpCodeEnum.MATERIAL_REFERENCE_FAIL);
-        }
-        // 图片少了
-        if (list.size() != ids.size()) {
-            throw new CustomException(AppHttpCodeEnum.MATERIAL_REFERENCE_FAIL);
-        }
-        // 素材有效，进行关联
-        newsMaterialMapper.save(ids, news.getId(), MediaConstants.WM_CONTENT_REFERENCE);
-    }
 }
