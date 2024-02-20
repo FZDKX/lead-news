@@ -78,5 +78,9 @@
             <artifactId>yitter-idgenerator</artifactId>
             <version>1.0.6</version>
         </dependency>
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 </project>

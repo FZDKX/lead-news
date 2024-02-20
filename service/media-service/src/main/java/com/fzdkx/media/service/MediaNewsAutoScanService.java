@@ -15,6 +15,6 @@ public interface MediaNewsAutoScanService {
      */
     void autoScanWmNews(MediaNews id);
 
-    Map<String,Object> getImageAndText(String content);
 
+    Map<String,Object> getImageAndText(MediaNews news);
 }

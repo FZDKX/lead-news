@@ -22,12 +22,12 @@ import com.fzdkx.model.media.bean.MediaNews;
 import com.fzdkx.model.media.bean.MediaUser;
 import com.fzdkx.model.media.bean.Sensitive;
 import com.fzdkx.utils.SensitiveWordUtil;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.imageio.ImageIO;
@@ -69,7 +69,7 @@ public class MediaNewsAutoScanServiceImpl implements MediaNewsAutoScanService {
      */
     @Override
     @Async
-    @Transactional
+    @GlobalTransactional
     public void autoScanWmNews(MediaNews news) {
 
         if (news == null){
@@ -84,9 +84,8 @@ public class MediaNewsAutoScanServiceImpl implements MediaNewsAutoScanService {
 
         // 如果文章存在，进行自动审核
         log.info("开始进行文章自动审核");
-        String content = news.getContent();
         // 获取文本和图片
-        Map<String, Object> map = getImageAndText(content);
+        Map<String, Object> map = getImageAndText(news);
         List<String> imageList = (List<String>) map.get("image");
         String text = (String) map.get("text");
         text = text + "-" + news.getTitle();
@@ -128,7 +127,7 @@ public class MediaNewsAutoScanServiceImpl implements MediaNewsAutoScanService {
         updateNewsStatus(news, MediaConstants.WM_NEWS_HAVE_PUBLISHED,"审核成功");
     }
 
-    @Transactional
+    @GlobalTransactional
     public boolean handleSensitiveScan(String text, MediaNews news) {
         boolean flag = true;
         // 查询数据库，获取所有的敏感词
@@ -147,7 +146,7 @@ public class MediaNewsAutoScanServiceImpl implements MediaNewsAutoScanService {
         return flag;
     }
 
-    @Transactional
+    @GlobalTransactional
     public void updateNewsStatus(MediaNews news, Short status, String reason) {
         news.setStatus(status);
         news.setReason(reason);
@@ -186,14 +185,12 @@ public class MediaNewsAutoScanServiceImpl implements MediaNewsAutoScanService {
     /**
      * 处理图片
      */
-    @Transactional
+    @GlobalTransactional
     public boolean handleImage(MediaNews news, List<String> imageList) {
         boolean b = true;
         if (imageList == null){
             return b;
         }
-        // 图片去重
-        imageList = imageList.stream().distinct().collect(Collectors.toList());
 
         //region 图片OCR文章审核
         try {
@@ -238,7 +235,7 @@ public class MediaNewsAutoScanServiceImpl implements MediaNewsAutoScanService {
     /**
      * 处理文本
      */
-    @Transactional
+    @GlobalTransactional
     public boolean handleText(MediaNews news, String text) {
         boolean b = true;
         if (text == null){
@@ -265,19 +262,21 @@ public class MediaNewsAutoScanServiceImpl implements MediaNewsAutoScanService {
      * 从文本中获取图片
      */
     @Override
-    public Map<String,Object> getImageAndText(String content){
+    public Map<String,Object> getImageAndText(MediaNews news) {
+        String content = news.getContent();
         List<String> list = null;
         StringBuilder str = new StringBuilder(300);
-        if (StringUtils.hasLength(content)){
+        if (StringUtils.hasLength(content)) {
             try {
                 ObjectMapper objectMapper = new ObjectMapper();
                 List<ApArticleContentNode> jsonArray
-                        = objectMapper.readValue(content, new TypeReference<List<ApArticleContentNode>>(){});
+                        = objectMapper.readValue(content, new TypeReference<>() {
+                });
                 list = new ArrayList<>();
                 for (ApArticleContentNode node : jsonArray) {
-                    if (MediaConstants.WM_NEWS_TYPE_IMAGE.equals(node.getType())){
+                    if (MediaConstants.WM_NEWS_TYPE_IMAGE.equals(node.getType())) {
                         list.add(node.getValue());
-                    }else if (MediaConstants.WM_NEWS_TYPE_TEXT.equals(node.getType())){
+                    } else if (MediaConstants.WM_NEWS_TYPE_TEXT.equals(node.getType())) {
                         str.append(node.getValue());
                     }
                 }
@@ -285,9 +284,24 @@ public class MediaNewsAutoScanServiceImpl implements MediaNewsAutoScanService {
                 throw new RuntimeException(e);
             }
         }
-        Map<String,Object> map = new HashMap<>();
-        map.put("text",str.toString());
-        map.put("image",list);
+        String images = news.getImages();
+        List<String> imageList = null;
+        if (StringUtils.hasLength(images)) {
+            // 获取封面集合
+            imageList = Arrays.stream(images.split(",")).toList();
+        }
+        if (list == null && imageList != null){
+           list = imageList;
+        }
+        else if (list != null && imageList != null){
+            list.addAll(imageList);
+        }
+        if (list != null){
+            list = list.stream().distinct().collect(Collectors.toList());
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("text", str.toString());
+        map.put("image", list);
         return map;
     }
 
@@ -295,20 +309,16 @@ public class MediaNewsAutoScanServiceImpl implements MediaNewsAutoScanService {
      * 数据库关联素材与文章
      */
     public void relevanceNewsAndImage(MediaNews news) {
-        String images = news.getImages();
-        if (StringUtils.hasLength(images)) {
-            return;
-        }
-        // 获取封面集合
-        List<String> list = Arrays.stream(images.split(",")).toList();
+        Map<String, Object> map = getImageAndText(news);
+        List<String> images = (List<String>) map.get("image");
         // 查询素材ID集合
-        List<Long> ids = materialMapper.getIds(list);
+        List<Long> ids = materialMapper.getIds(images);
         // 代表素材无效，已经被删除
         if (ids == null || ids.isEmpty()) {
             throw new CustomException(AppHttpCodeEnum.MATERIAL_REFERENCE_FAIL);
         }
         // 图片少了
-        if (list.size() != ids.size()) {
+        if (images.size() != ids.size()) {
             throw new CustomException(AppHttpCodeEnum.MATERIAL_REFERENCE_FAIL);
         }
         // 素材有效，进行关联

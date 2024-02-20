@@ -15,6 +15,7 @@ import com.fzdkx.model.article.dto.ArticleDto;
 import com.fzdkx.model.common.enums.AppHttpCodeEnum;
 import com.fzdkx.model.common.vo.Result;
 import com.github.yitter.idgen.YitIdHelper;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @GlobalTransactional
     public Result<Long> saveArticle(ArticleDto dto) {
         if (dto == null){
             throw new CustomException(AppHttpCodeEnum.PARAM_REQUIRE);

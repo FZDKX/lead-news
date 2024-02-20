@@ -46,6 +46,7 @@
         <ali.core.version>4.1.1</ali.core.version>
         <ali.green.version>3.4.1</ali.green.version>
         <tess4j.version>4.1.1</tess4j.version>
+        <seata.version>1.7.1</seata.version>
     </properties>
 
     <!--定义依赖版本-->
@@ -112,6 +113,26 @@
                 <artifactId>tess4j</artifactId>
                 <version>${tess4j.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-spring-boot-starter</artifactId>
+                <version>${seata.version}</version>
+            </dependency>
+            <!--seata-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+                <exclusions>
+                    <!--版本较低，1.7.0，因此排除-->
+                    <exclusion>
+                        <groupId>io.seata</groupId>
+                        <artifactId>seata-spring-boot-starter</artifactId>
+                    </exclusion>
+                </exclusions>
+                <!-- 父项目中需要指定地址 -->
+                <version>${alibaba.cloud.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     <dependencies>

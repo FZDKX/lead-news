@@ -123,7 +123,7 @@ public class MediaNewsServiceImpl implements MediaNewsService {
             // 自动
             if (news.getType().equals(MediaConstants.WM_NEWS_TYPE_AUTO)){
                 // 获取数据
-                Map<String, Object> map = mediaNewsAutoScanService.getImageAndText(news.getContent());
+                Map<String, Object> map = mediaNewsAutoScanService.getImageAndText(news);
                 images = (List<String>) map.get("image");
                 if (images.size() >= 3) {
                     news.setType(MediaConstants.WM_NEWS_MANY_IMAGE);
