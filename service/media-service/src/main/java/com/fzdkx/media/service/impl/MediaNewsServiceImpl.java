@@ -1,5 +1,6 @@
 package com.fzdkx.media.service.impl;
 
+import com.fzdkx.apis.article.IScheduleClient;
 import com.fzdkx.common.constants.MediaConstants;
 import com.fzdkx.common.exception.CustomException;
 import com.fzdkx.media.mapper.MediaMaterialMapper;
@@ -13,6 +14,7 @@ import com.fzdkx.model.common.vo.Result;
 import com.fzdkx.model.media.bean.MediaNews;
 import com.fzdkx.model.media.dto.MediaNewsDto;
 import com.fzdkx.model.media.dto.MediaNewsPageReqDto;
+import com.fzdkx.model.schedule.bean.Task;
 import com.fzdkx.utils.MediaThreadLocalUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -40,6 +42,8 @@ public class MediaNewsServiceImpl implements MediaNewsService {
     private MediaMaterialMapper materialMapper;
     @Autowired
     private MediaNewsAutoScanService mediaNewsAutoScanService;
+    @Autowired
+    private IScheduleClient scheduleClient;
 
     @Override
     public Result<List<MediaNews>> getNewsList(MediaNewsPageReqDto dto) {
@@ -80,8 +84,11 @@ public class MediaNewsServiceImpl implements MediaNewsService {
         // 如果要发布文章
         if (MediaConstants.WM_NEWS_COMMIT.equals(mediaNews.getStatus())) {
             log.info("正在准备发布文章，newsId：{}",mediaNews.getId());
-            // 开始进行自动审核
-            mediaNewsAutoScanService.autoScanWmNews(mediaNews);
+            // 向MQ发送消息，准备发布文章
+            Task task = new Task();
+            task.setId(mediaNews.getId());
+            task.setPublishTime(dto.getPublishTime());
+            scheduleClient.addTask(task);
         }
         return Result.success();
     }

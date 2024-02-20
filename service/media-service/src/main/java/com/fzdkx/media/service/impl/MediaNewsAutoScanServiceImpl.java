@@ -26,7 +26,6 @@ import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -68,9 +67,14 @@ public class MediaNewsAutoScanServiceImpl implements MediaNewsAutoScanService {
      * 自媒体文章自动审核
      */
     @Override
-    @Async
     @GlobalTransactional
-    public void autoScanWmNews(MediaNews news) {
+    public void autoScanWmNews(Long id) {
+        if (id == null){
+            log.info("文章不存在，无法发布");
+            throw new CustomException(AppHttpCodeEnum.PARAM_INVALID);
+        }
+
+        MediaNews news = mediaNewsMapper.selectById(id);
 
         if (news == null){
             log.info("文章不存在，无法发布");

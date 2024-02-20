@@ -1,18 +1,17 @@
-package com.fzdkx.article;
+package com.fzdkx.schedule;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * @author 发着呆看星
- * @create 2024/2/4
+ * @create 2024/2/20
  */
 @SpringBootApplication
-@MapperScan("com.fzdkx.article.mapper")
-public class ArticleApplication {
+@MapperScan("com.fzdkx.schedule.mapper")
+public class ScheduleApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ArticleApplication.class,args);
+        SpringApplication.run(ScheduleApplication.class,args);
     }
 }

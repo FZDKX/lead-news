@@ -1,6 +1,7 @@
 package com.fzdkx.media;
 
 import com.fzdkx.apis.article.IArticleClient;
+import com.fzdkx.apis.article.IScheduleClient;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  */
 @SpringBootApplication
 @MapperScan("com.fzdkx.media.mapper")
-@EnableFeignClients(clients = {IArticleClient.class})
+@EnableFeignClients(clients = {IArticleClient.class, IScheduleClient.class})
 @EnableAsync
 public class MediaApplication {
     public static void main(String[] args) {
